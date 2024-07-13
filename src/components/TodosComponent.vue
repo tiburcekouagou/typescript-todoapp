@@ -2,7 +2,7 @@
   <div>
     <TodoHeader @add-todo="addTodo" />
 
-    <TodoMain :taches="todos" />
+    <TodoMain :taches="todos" @delete-todo="deleteTodo" />
 
     <TodoFooter :todos="todos" />
   </div>
@@ -17,12 +17,16 @@ import { ref } from 'vue'
 import { nanoid } from 'nanoid'
 
 const todos = ref<Todo[]>([])
-function addTodo(value: string) {
+function addTodo(value: string): void {
   todos.value.push({
     id: nanoid(),
     title: value,
     complete: false
   })
+}
+
+function deleteTodo(todo: Todo): void {
+  todos.value = todos.value.filter((t) => t !== todo)
 }
 </script>
 
