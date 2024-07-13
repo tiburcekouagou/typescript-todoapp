@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <!-- TodosComponent -->
-        <TodosComponent />
-        <!-- /TodosComponent -->
-    </div>
+  <div>
+    <!-- TodosComponent -->
+    <TodosComponent />
+    <!-- /TodosComponent -->
+  </div>
 </template>
 
 <script setup lang="ts">
