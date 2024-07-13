@@ -22,14 +22,14 @@
 </template>
 
 <script setup lang="ts">
-import type { Todo } from '@/@types';
+import type { Todo } from '@/@types'
 import { computed } from 'vue'
 
 const props = defineProps<{
   todos: Todo[]
 }>()
 
-const remaining = computed(() => props.todos.filter(todo => !todo.complete).length);
+const remaining = computed(() => props.todos.filter((todo) => !todo.complete).length)
 </script>
 
 <style scoped></style>
