@@ -23,6 +23,11 @@ import { nanoid } from 'nanoid'
 
 const todos = ref<Todo[]>([])
 function addTodo(value: string): void {
+  if (value.trim().length === 0) {
+    // si la tâche est vide,
+    return // on sort de la fonction sans rien faire
+  }
+
   todos.value.push({
     id: nanoid(),
     title: value,
