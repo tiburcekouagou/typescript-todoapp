@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vueuse/core": "^10.11.0",
     "nanoid": "^5.0.7",
     "todomvc-app-css": "^2.4.3",
     "vue": "^3.4.29",
