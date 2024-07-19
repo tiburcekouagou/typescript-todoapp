@@ -6,15 +6,8 @@
       <button class="destroy" @click="emit('delete-todo', todo)"></button>
     </div>
     <div class="input-container">
-      <input
-        ref="editRef"
-        id="edit-to-input"
-        class="edit"
-        type="text"
-        v-model="editInput"
-        @keyup.enter="finishEdit"
-        @blur="cancelEdit"
-      />
+      <input ref="editRef" id="edit-to-input" class="edit" type="text" v-model="editInput" @keyup.enter="finishEdit"
+        @blur="cancelEdit" />
       <label class="visually-hidden" for="edit-to-input">Editer</label>
     </div>
   </li>
@@ -71,7 +64,7 @@ function editTodo() {
 }
 
 function cancelEdit() {
-  console.log('cancel edit')
+  editing.value = false
 }
 </script>
 
