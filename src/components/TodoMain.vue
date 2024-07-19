@@ -1,5 +1,5 @@
 <template>
-  <main class="main">
+  <main class="main" v-show="taches.length > 0">
     <div class="">
       <input id="toggle-all-input" type="checkbox" class="toggle-all" v-model="toggleAll" />
       <label htmlFor="toggle-all-input">Switcher toutes les tâches</label>
@@ -21,7 +21,6 @@
 import type { Todo } from '@/@types'
 import TodoItem from '@/components/TodoItem.vue'
 import { computed } from 'vue'
-// const props = defineProps(['taches']);
 
 const props = defineProps<{
   taches: Todo[]

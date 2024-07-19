@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import type { Todo } from '@/@types'
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 const props = defineProps<{
   todo: Todo
 }>()
@@ -39,12 +39,6 @@ const isTodoCompleted = computed<boolean>({
     emit('update-todo', props.todo, value)
   }
 })
-
-// const isTodoCompleted = props.todo.complete
-
-// watch(() => props.todo.complete, () => {
-//   emit('update-todo', props.todo, props.todo.complete)
-// })
 
 const editRef = ref<HTMLInputElement>() // élement du dom
 const editing = ref<boolean>(false)
