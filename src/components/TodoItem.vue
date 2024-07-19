@@ -33,11 +33,18 @@ const emit = defineEmits<{
   (e: 'edit-todo', todo: Todo, value: string): void
 }>()
 
-const isTodoCompleted = ref<boolean>(props.todo.complete)
-
-watch(isTodoCompleted, (newVal) => {
-  emit('update-todo', props.todo, newVal)
+const isTodoCompleted = computed<boolean>({
+  get: () => props.todo.complete,
+  set: (value: boolean) => {
+    emit('update-todo', props.todo, value)
+  }
 })
+
+// const isTodoCompleted = props.todo.complete
+
+// watch(() => props.todo.complete, () => {
+//   emit('update-todo', props.todo, props.todo.complete)
+// })
 
 const editRef = ref<HTMLInputElement>() // élement du dom
 const editing = ref<boolean>(false)
