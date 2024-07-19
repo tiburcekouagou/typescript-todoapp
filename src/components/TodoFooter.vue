@@ -7,13 +7,17 @@
     </span>
     <ul class="filters">
       <li>
-        <router-link to="/">Tous</router-link>
+        <router-link :class="{ selected: route.path === '/' }" to="/">Tous</router-link>
       </li>
       <li>
-        <router-link to="/waiting">En cours</router-link>
+        <router-link :class="{ selected: route.path === '/waiting' }" to="/waiting"
+          >En cours</router-link
+        >
       </li>
       <li>
-        <router-link to="/completed">Terminés</router-link>
+        <router-link :class="{ selected: route.path === '/completed' }" to="/completed"
+          >Terminés</router-link
+        >
       </li>
     </ul>
 
@@ -24,11 +28,13 @@
 <script setup lang="ts">
 import type { Todo } from '@/@types'
 import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 const props = defineProps<{
   todos: Todo[]
 }>()
 
+const route = useRoute()
 const remaining = computed(() => props.todos.filter((todo) => !todo.complete).length)
 </script>
 

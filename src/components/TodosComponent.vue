@@ -2,10 +2,14 @@
   <div>
     <TodoHeader @add-todo="addTodo" />
 
-    <TodoMain :taches="filteredTodos" @delete-todo="deleteTodo" @update-todo="updateTodo" @edit-todo="editTodo" />
+    <TodoMain
+      :taches="filteredTodos"
+      @delete-todo="deleteTodo"
+      @update-todo="updateTodo"
+      @edit-todo="editTodo"
+    />
 
     <TodoFooter :todos="todos" />
-
   </div>
 </template>
 
@@ -26,26 +30,23 @@ const filters = computed(() => {
   return {
     all: todos,
     waiting: todos.value.filter((todo) => !todo.complete),
-    completed: todos.value.filter((todo) => todo.complete),
-  };
+    completed: todos.value.filter((todo) => todo.complete)
+  }
 })
 
 const waitingTodos = computed<Todo[]>(() => filters.value.waiting)
 const completedTodos = computed<Todo[]>(() => filters.value.completed)
 
-
-
 const filteredTodos = computed(() => {
   switch (route.name) {
     case 'waiting':
-      return waitingTodos.value;
+      return waitingTodos.value
     case 'completed':
-      return completedTodos.value;
+      return completedTodos.value
     default:
       return todos.value
   }
 })
-
 
 function addTodo(value: string): void {
   if (value.trim().length === 0) {
