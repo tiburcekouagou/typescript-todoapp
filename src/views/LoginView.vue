@@ -27,8 +27,11 @@
         </v-card>
       </v-col>
     </v-row>
+    <p>
+    Vous n'avez pas de compte ?
+    <router-link :to="{name: 'register'}">créez un compte</router-link>.
+  </p>
 
-    <pre>{{ { user } }}</pre>
   </v-container>
 </template>
 

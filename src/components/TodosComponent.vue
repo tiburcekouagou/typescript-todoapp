@@ -2,15 +2,12 @@
   <div>
     <TodoHeader @add-todo="addTodo" />
 
-    <TodoMain
-      :taches="filteredTodos"
-      @delete-todo="deleteTodo"
-      @update-todo="updateTodo"
-      @edit-todo="editTodo"
-      @toggle-all-input="toggleAllInput"
-    />
+    <TodoMain :taches="filteredTodos" @delete-todo="deleteTodo" @update-todo="updateTodo" @edit-todo="editTodo"
+      @toggle-all-input="toggleAllInput" />
 
     <TodoFooter :todos="todos" @delete-completed="deleteCompleted" />
+
+
   </div>
 </template>
 
@@ -21,11 +18,23 @@ import TodoFooter from '@/components/TodoFooter.vue'
 import type { Todo } from '@/@types'
 import { nanoid } from 'nanoid'
 import { useStorage } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useTodos } from '@/composables/todos'
 
-const todos = useStorage<Todo[]>('todoapp-todos', [])
+const { createTodo, changeTodo, getTodo, getTodos, removeTodo, firebaseTodos } = useTodos()
+
+
+const todos = computed(() => firebaseTodos.value);
 const route = useRoute()
+
+
+
+onMounted(async () => {
+  await getTodos()
+})
+
+
 
 const filters = computed(() => {
   return {
@@ -49,33 +58,33 @@ const filteredTodos = computed(() => {
   }
 })
 
-function addTodo(value: string): void {
+async function addTodo(value: string) {
   if (value.trim().length === 0) {
     // si la tâche est vide,
     return // on sort de la fonction sans rien faire
   }
 
-  todos.value.push({
-    id: nanoid(),
-    title: value,
-    complete: false
-  })
+  await createTodo(value);
 }
 
-function deleteTodo(todo: Todo): void {
-  todos.value = todos.value.filter((t) => t !== todo)
+async function deleteTodo(todo: Todo) {
+  await removeTodo(todo)
 }
 
-function updateTodo(todo: Todo, completedValue: boolean) {
-  todo.complete = completedValue
+async function updateTodo(todo: Todo, completedValue: boolean) {
+  changeTodo(todo, { ...todo, complete: completedValue });
 }
 
-function editTodo(todo: Todo, value: string) {
-  todo.title = value
+async function editTodo(todo: Todo, titleValue: string) {
+  changeTodo(todo, { ...todo, title: titleValue });
 }
 
 function deleteCompleted() {
-  todos.value = todos.value.filter((todo) => !todo.complete)
+  const todosToDelete = todos.value.filter((todo) => todo.complete)
+
+  todosToDelete.forEach(async (todo) => {
+    await removeTodo(todo);
+  })
 }
 
 function toggleAllInput(value: boolean) {
